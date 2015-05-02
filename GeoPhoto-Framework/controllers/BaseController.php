@@ -8,4 +8,25 @@
 
 abstract class BaseController {
 
+    protected  $controllerName;
+    protected $action;
+
+    function __construct($controllerName,$action){
+        $this->controllerName = $controllerName;
+        $this->action = $action;
+    }
+    public function index(){
+
+    }
+
+    public function renderView($viewName = null){
+        if($viewName == null){
+            $viewName = $this->action;
+        }
+
+        $viewFileName = 'views/'.$this->controllerName
+            .'/'.$viewName.'.php';
+
+        include_once($viewFileName);
+    }
 }
