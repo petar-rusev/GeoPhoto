@@ -1,8 +1,6 @@
 <?php
 require_once('includes/config.php');
 
-echo "I am index PHP";
-echo "<br/>";
 $requestParts = explode('/',parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH));
 
 $controllerName = DEFAULT_CONTROLLER;
@@ -14,7 +12,7 @@ $action = DEFAULT_ACTION;
 if(count($requestParts)>=3 && $requestParts[2] != ''){
     $action = $requestParts[2];
 }
-echo $action;
+
 $params = array_splice($requestParts,3);
 
 $controllerClassName = ucfirst(strtolower($controllerName)).'Controller';
@@ -33,9 +31,8 @@ if(method_exists($controller,$action)){
 else{
     die("Cannot find action $action in controller $controllerClassName");
 }
-var_dump($params);
-$controller->renderView();
 
+$controller->renderView();
 
 function __autoload($class_name){
     if(file_exists("controllers/$class_name.php")){

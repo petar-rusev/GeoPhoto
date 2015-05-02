@@ -1,1 +1,2 @@
-I am The Home directory index view.
+<div id="map-canvas" style="width:800px;height:600px">
+</div>
