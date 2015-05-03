@@ -1,0 +1,36 @@
+body {
+    overflow-x: hidden;
+}
+
+footer {
+    background-color:#375a7f;
+    margin-top:20px;
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+.footer-text{
+    color:#ffffff;
+}
+
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.form-horizontal{
+    background-color: #303030;
+    padding:20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+
+
+

@@ -12,10 +12,13 @@ abstract class BaseController {
     protected $action;
     protected $layoutName = DEFAULT_LAYOUT;
     protected $isViewRendered = false;
-
+    protected $isPost = false;
     function __construct($controllerName,$action){
         $this->controllerName = $controllerName;
         $this->action = $action;
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $this->isPost = true;
+        }
         $this->onInit();
     }
 
@@ -47,5 +50,21 @@ abstract class BaseController {
 
             $this->isViewRendered=true;
         }
+    }
+
+    public function redirectToUrl($url){
+        header("Location: ".$url);
+        die;
+    }
+    public function redirect($controllerName,$actionName=null,$params = null){
+        $url = "/".urldecode($controllerName);
+        if($actionName!=null){
+            $url .= '/'.urlencode($actionName);
+        }
+        if($params != null){
+            $encodedparams = array_map($params,'urlencode');
+            $url .= implode('/',$encodedparams);
+        }
+        $this->redirectToUrl($url);
     }
 }

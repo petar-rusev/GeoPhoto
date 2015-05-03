@@ -1,14 +1,13 @@
-<h1><?= htmlspecialchars($this->title)?></h1>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>name</th>
-    </tr>
-    <?php foreach ($this->albums as $album) : ?>
-        <tr>
-            <td><?= htmlspecialchars($album['id'])?></td>
-            <td><?= htmlspecialchars($album['name'])?></td>
-        </tr>
-    <?php endforeach ?>
-</table>
-Hello, I am the Index view.
+<?php foreach($this->albums as $album) : ?>
+<div class="row">
+<div id="album_plate" class="col-md-3">
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= htmlspecialchars($album['Name'])?></h3>
+    </div>
+    <div class="panel-body">
+        <?= htmlspecialchars($album['Description'])?>
+    </div>
+</div>
+</div>
+<?php endforeach ?>

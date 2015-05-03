@@ -1,54 +1,30 @@
-<table class="table table-striped table-hover ">
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>Column heading</th>
-        <th>Column heading</th>
-        <th>Column heading</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>1</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    <tr class="info">
-        <td>3</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    <tr class="success">
-        <td>4</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    <tr class="danger">
-        <td>5</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    <tr class="warning">
-        <td>6</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    <tr class="active">
-        <td>7</td>
-        <td>Column content</td>
-        <td>Column content</td>
-        <td>Column content</td>
-    </tr>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-5 col-md-offset-4">
+        <form method="post" class="form-horizontal" action="/albums/create">
+            <legend>
+                Create Album
+                <hr/>
+            </legend>
+            <div class="form-group">
+                <label for="album_name" class="col-md-2 control-label">Album Name</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="album_name" placeholder="Album Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="album_description" class="col-md-2 control-label">Description</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" rows="3" name="album_description"></textarea>
+                    <span class="help-block">Short description for the album content and etc.</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary" value="Create">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

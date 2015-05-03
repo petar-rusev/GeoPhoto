@@ -1,0 +1,10 @@
+#album_plate{
+    display: inline;
+    margin-right:10px;
+    padding:0px;
+    width:300px;
+}
+.panel-info{
+    margin:0;
+    padding:0;
+}
