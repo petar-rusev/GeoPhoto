@@ -16,17 +16,19 @@ abstract class BaseController {
     function __construct($controllerName,$action){
         $this->controllerName = $controllerName;
         $this->action = $action;
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            $this->isPost = true;
-        }
         $this->onInit();
     }
 
     public function onInit(){
 
     }
+
     public function index(){
 
+    }
+
+    protected function isPost() {
+        return $_SERVER['REQUEST_METHOD'] == 'POST';
     }
 
     public function renderView($viewName = null,$includeLayout = true){

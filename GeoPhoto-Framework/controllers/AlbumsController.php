@@ -14,11 +14,12 @@ class AlbumsController extends BaseController {
         $this->albums = $model->getAll();
     }
     public function create(){
-        if($this->isPost){
+        if($this->isPost()){
             $name = $_POST['album_name'];
             $description = $_POST['album_description'];
             $userId = 1;//This is only test value to create an album. When the authorization is implemented it will be get from the database.
-            $this->albums = $this->model->createAlbum($name,$description,$userId);
+            $isPublic = 0;
+            $this->albums = $this->model->create($name,$description,$userId,$isPublic);
             if(!$this->albums){
                 $this->redirect('albums/create');
             }

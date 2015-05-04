@@ -9,8 +9,6 @@
     <script src="/content/lib/bootstrap/bootstrap-3.1.1.js"></script>
     <script src="/content/lib/jquery.noty/jquery.noty.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="/content/js/initialize.js"></script>
-    <script src="/content/js/currentPosition.js"></script>
     <link rel="stylesheet" href="/content/styles/bootstrap/bootstrap.css"/>
     <link rel="stylesheet" href="/content/styles/bootstrapTheme.css"/>
     <link rel="stylesheet" href="/content/styles/app.css"/>

@@ -16,13 +16,13 @@ class AlbumsModel extends BaseModel {
         return $statement->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function create($name,$description,$userId){
+    public function create($name,$description,$userId,$isPublic){
         if($name == ''){
           return false;
        }
         $statement = self::$db->prepare(
-            "INSERT INTO albums(Name,Description,Users_Id) VALUES(?,?,?)");
-        $statement->bind_param("ssi",$name,$description,$userId);
+            "INSERT INTO albums(Name,Description,Users_Id,isPublic) VALUES(?,?,?,?)");
+        $statement->bind_param("ssii",$name,$description,$userId,$isPublic);
         $statement->execute();
 
         return $statement->affected_rows>0;
