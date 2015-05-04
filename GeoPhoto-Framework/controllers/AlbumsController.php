@@ -5,6 +5,7 @@ class AlbumsController extends BaseController {
     private $model;
 
     public function onInit(){
+        $this->authorize();
         $this->title = "Albums";
         $this->model = new AlbumsModel();
     }

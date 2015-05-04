@@ -76,7 +76,10 @@ abstract class BaseController {
         $this->redirectToUrl($url);
     }
 
-    public function getUser(){
-
+    public function authorize(){
+        if(!$this->isLoggedIn){
+            echo "please login first";
+            $this->redirect("account","login");
+        }
     }
 }
