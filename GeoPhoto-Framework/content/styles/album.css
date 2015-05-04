@@ -1,8 +1,13 @@
 #album_plate{
-    display: inline;
-    margin-right:10px;
+    display: inline-block;
     padding:0px;
     width:300px;
+}
+
+#album_container{
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
 }
 .panel-info{
     margin:0;
