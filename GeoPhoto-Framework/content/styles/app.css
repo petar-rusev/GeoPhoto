@@ -1,9 +1,7 @@
 body {
     overflow-x: hidden;
 }
-
 footer {
-    background-color:#375a7f;
     margin-top:20px;
     position:absolute;
     bottom:0;
@@ -20,7 +18,7 @@ footer {
 }
 
 .form-horizontal{
-    background-color: #303030;
+    background-color:#f8f5f0;
     padding:20px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -30,7 +28,9 @@ footer {
 textarea {
     resize: none;
 }
-
+#user_info{
+    color: #ffffff;
+}
 
 
 

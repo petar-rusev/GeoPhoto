@@ -13,10 +13,16 @@ abstract class BaseController {
     protected $layoutName = DEFAULT_LAYOUT;
     protected $isViewRendered = false;
     protected $isPost = false;
+    protected $isLoggedIn;
+
     function __construct($controllerName,$action){
         $this->controllerName = $controllerName;
         $this->action = $action;
         $this->onInit();
+
+        if(isset($_SESSION['username'])){
+            $this->isLoggedIn = true;
+        }
     }
 
     public function onInit(){
@@ -68,5 +74,9 @@ abstract class BaseController {
             $url .= implode('/',$encodedparams);
         }
         $this->redirectToUrl($url);
+    }
+
+    public function getUser(){
+
     }
 }

@@ -20,6 +20,7 @@ class AccountController extends BaseController {
             }
             $isRegistered = $this->model->register($username,$password,$email,$phone);
             if($isRegistered){
+                $_SESSION['username'] = $username;
                 $this->redirect("albums");
             }
             else{
@@ -35,6 +36,7 @@ class AccountController extends BaseController {
             $password = $_POST['password'];
             $isLogged = $this->model->login($username,$password);
             if($isLogged){
+                $_SESSION['username'] = $username;
                 $this->redirect('albums');
             }
             else{
@@ -44,6 +46,7 @@ class AccountController extends BaseController {
     }
 
     public function logout(){
-
+        unset($_SESSION['username']);
+        $this->redirectToUrl('/');
     }
 }
