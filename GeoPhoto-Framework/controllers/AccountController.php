@@ -19,8 +19,11 @@ class AccountController extends BaseController {
                 $this->redirect("account","register");
             }
             $isRegistered = $this->model->register($username,$password,$email,$phone);
+            $userId = $this->model->getUser($username);
+
             if($isRegistered){
                 $_SESSION['username'] = $username;
+                $_SESSION[userId]=$userId;
                 $this->redirect("albums");
             }
             else{
@@ -46,7 +49,8 @@ class AccountController extends BaseController {
     }
 
     public function logout(){
-        unset($_SESSION['username']);
+        session_destroy();
         $this->redirectToUrl('/');
     }
+
 }

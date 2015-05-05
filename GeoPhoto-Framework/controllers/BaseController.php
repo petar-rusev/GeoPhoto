@@ -10,6 +10,7 @@ abstract class BaseController {
 
     protected  $controllerName;
     protected $action;
+    protected $params;
     protected $layoutName = DEFAULT_LAYOUT;
     protected $isViewRendered = false;
     protected $isPost = false;
@@ -77,7 +78,7 @@ abstract class BaseController {
     }
 
     public function authorize(){
-        if(!$this->isLoggedIn){
+        if($this->isLoggedIn){
             echo "please login first";
             $this->redirect("account","login");
         }

@@ -19,6 +19,14 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="album_public" class="col-md-2 control-label">Public</label>
+                <div class="col-md-8">
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="album_isPublic" value="1"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
                     <button class="btn btn-default">Cancel</button>
                     <button type="submit" class="btn btn-primary" value="Create">Create</button>

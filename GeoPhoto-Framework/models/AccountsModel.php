@@ -36,4 +36,13 @@ class AccountsModel extends BaseModel {
 
         return false;
     }
+
+    public function getUser($username){
+        $statement = self::$db->prepare("SELECT Id FROM Users WHERE Username = ?");
+        $statement->bind_param("s",$username);
+        $statement->execute();
+        $result = $statement->get_result()->fetch_assoc();
+
+        return $result;
+    }
 }

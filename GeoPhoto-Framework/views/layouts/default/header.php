@@ -31,7 +31,7 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/albums">Albums</a></li>
+                    <li class="active"><a href="/albums/index">Albums</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">

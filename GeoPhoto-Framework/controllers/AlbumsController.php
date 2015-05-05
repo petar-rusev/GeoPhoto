@@ -18,8 +18,8 @@ class AlbumsController extends BaseController {
         if($this->isPost()){
             $name = $_POST['album_name'];
             $description = $_POST['album_description'];
-            $userId = 1;//This is only test value to create an album. When the authorization is implemented it will be get from the database.
-            $isPublic = 0;
+            $userId = $_SESSION['userId'];
+            $isPublic = $_POST['album_isPublic'];
             $this->albums = $this->model->create($name,$description,$userId,$isPublic);
             if(!$this->albums){
                 $this->redirect('albums/create');
@@ -31,7 +31,7 @@ class AlbumsController extends BaseController {
         }
     }
 
-    public function edit($id,$name,$description,$isPublic){
+    public function edit($id){
         if($this->isPost()){
             $name = $_POST['album_name'];
             $description = $_POST['album_description'];
@@ -61,4 +61,5 @@ class AlbumsController extends BaseController {
             echo "Can not delete the album.";
         }
     }
+
 }
