@@ -17,10 +17,11 @@
                     <input type="file" class="form-control" name="image_filename" placeholder="Upload file">
                 </div>
             </div>
+            <input type="hidden" name="albumId" value="<?php ?>" />
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
                     <button class="btn btn-default">Cancel</button>
-                    <button type="submit" class="btn btn-primary" value="Upload">Upload</button>
+                    <button type="submit" class="btn btn-primary" value="upload">Upload</button>
                 </div>
             </div>
         </form>

@@ -12,9 +12,10 @@
         <?= htmlspecialchars($album['Description'])?>
     </div>
     <div id="album_actions">
-        <a href="/albums/view/<?=$album['Id'] ?>" class="btn btn-primary btn-xs">View</a>
-        <a href="/albums/edit/<?=$album['Id'] ?>" class="btn btn-primary btn-xs">Edit</a>
-        <a href="/pictures/upload/<?=$album['Id'] ?>" class="btn btn-primary btn-xs">Add pictures</a>
+        <a href="/albums/view" class="btn btn-primary btn-xs">View</a>
+        <a href="/albums/edit" class="btn btn-primary btn-xs">Edit</a>
+        <a href="/pictures/upload" class="btn btn-primary btn-xs">Add pictures</a>
+        <input type="hidden" name="albumId" value="<?php $_SESSION['albumId']=$album['Id'] ?>" />
     </div>
 </div>
 </div>

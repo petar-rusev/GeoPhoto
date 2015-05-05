@@ -14,12 +14,18 @@ class AlbumsController extends BaseController {
         $model = new AlbumsModel();
         $this->albums = $model->getAll();
     }
+    public function set_album_wall(){
+
+    }
     public function create(){
         if($this->isPost()){
             $name = $_POST['album_name'];
             $description = $_POST['album_description'];
             $userId = $_SESSION['userId'];
             $isPublic = $_POST['album_isPublic'];
+            if(!isset($isPublic)){
+                $isPublic = 0;
+            }
             $this->albums = $this->model->create($name,$description,$userId,$isPublic);
             if(!$this->albums){
                 $this->redirect('albums/create');

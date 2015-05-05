@@ -29,7 +29,7 @@ else{
 }
 
 if(method_exists($controller,$action)){
-    $controller->{$action}();
+    call_user_func_array(array($controller,$action),$params);
 }
 else{
     die("Cannot find action $action in controller $controllerClassName");

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/content/styles/app.css"/>
     <link rel="stylesheet" href="/content/styles/forms.css"/>
     <link rel="stylesheet" href="/content/styles/album.css"/>
+    <link rel="stylesheet" href="/content/js/fileUpload.js"/>
 </head>
 <body>
 <header>

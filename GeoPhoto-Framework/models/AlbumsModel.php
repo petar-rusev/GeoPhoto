@@ -20,6 +20,7 @@ class AlbumsModel extends BaseModel {
         if($name == ''){
           return false;
        }
+
         $statement = self::$db->prepare(
             "INSERT INTO albums(Name,Description,Users_Id,isPublic) VALUES(?,?,?,?)");
         $statement->bind_param("ssii",$name,$description,$userId,$isPublic);
