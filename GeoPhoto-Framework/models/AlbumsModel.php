@@ -47,4 +47,17 @@ class AlbumsModel extends BaseModel {
         $statement->execute();
         return $statement->affected_rows>0;
     }
+
+    public function view($id){
+
+        $statement = self::$db->prepare("SELECT * FROM Pictures LEFT OUTER JOIN Albums_has_Pictures
+            ON (Id=Albums_Id)WHERE Albums_Id = ?");
+
+        $statement->bind_param("i",$id);
+        $statement->execute();
+        $picturesId = $statement->get_result()->fetch_assoc();
+
+        return $statement->get_result()->fetch_assoc();
+    }
+
 }

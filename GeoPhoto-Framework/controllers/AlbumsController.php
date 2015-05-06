@@ -5,19 +5,19 @@ class AlbumsController extends BaseController {
     private $model;
 
     public function onInit(){
-        $this->authorize();
         $this->title = "Albums";
         $this->model = new AlbumsModel();
     }
 
     public function index(){
-        $model = new AlbumsModel();
-        $this->albums = $model->getAll();
+        $this->authorize();
+        $this->albums = $this->model->getAll();
     }
     public function set_album_wall(){
 
     }
     public function create(){
+        $this->authorize();
         if($this->isPost()){
             $name = $_POST['album_name'];
             $description = $_POST['album_description'];
@@ -38,6 +38,7 @@ class AlbumsController extends BaseController {
     }
 
     public function edit($id){
+        $this->authorize();
         if($this->isPost()){
             $name = $_POST['album_name'];
             $description = $_POST['album_description'];
@@ -60,12 +61,17 @@ class AlbumsController extends BaseController {
     }
 
     public function delete($id){
+        $this->authorize();
         if($this->model->delete($id)){
             echo "The album successfully deleted";
         }
         else{
             echo "Can not delete the album.";
         }
+    }
+
+    public function view($id){
+
     }
 
 }

@@ -53,6 +53,10 @@
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
                 <ul id="user_info" class="nav navbar-nav navbar-right">
+                    <?php if(!$this->isLoggedIn) : ?>
+                        <li><a href="/account/login">Login</a></li>
+                        <li><a href="/account/register">Signup</a></li>
+                    <?php endif;?>
                     <?php if($this->isLoggedIn) : ?>
                         <li><span>Hello, <?php echo $_SESSION['username']?></span></li>
                         <form method="post" action="/account/logout"><input type="submit" value="Logout"/></form>
