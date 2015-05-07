@@ -18,13 +18,11 @@ class AccountController extends BaseController {
                 echo "User name is invalid";
                 $this->redirect("account","register");
             }
-            $isRegistered = $this->model->register($username,$password,$email,$phone);
-            $userId = $this->model->getUser($username);
 
-            if($isRegistered){
+            if($this->model->register($username,$password,$email,$phone)){
                 $_SESSION['username'] = $username;
-                $_SESSION[userId]=$userId;
-                $this->redirect("albums");
+                $_SESSION[userId]=$this->model->getUser($username);
+                $this->redirect("albums",'index');
             }
             else{
                 echo "Register failed";
@@ -37,10 +35,10 @@ class AccountController extends BaseController {
         if($this->isPost()){
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $isLogged = $this->model->login($username,$password);
-            if($isLogged){
+            if($this->model->login($username,$password)){
                 $_SESSION['username'] = $username;
-                $this->redirect('albums');
+                $_SESSION['userId'] = $this->model->getUser($username);
+                $this->redirect('albums','index');
             }
             else{
                 echo "Login Error!";
@@ -50,7 +48,7 @@ class AccountController extends BaseController {
 
     public function logout(){
         session_destroy();
-        $this->redirectToUrl('/');
+        $this->redirectToUrl('/home/index');
     }
 
 }

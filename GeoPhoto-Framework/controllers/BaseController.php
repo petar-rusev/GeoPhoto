@@ -20,10 +20,6 @@ abstract class BaseController {
         $this->controllerName = $controllerName;
         $this->action = $action;
         $this->onInit();
-
-        if(isset($_SESSION['username'])){
-            $this->isLoggedIn = true;
-        }
     }
 
     public function onInit(){
@@ -76,9 +72,11 @@ abstract class BaseController {
         }
         $this->redirectToUrl($url);
     }
-
+    public function isLoggedIn(){
+        return isset($_SESSION['username']);
+    }
     public function authorize(){
-        if($this->isLoggedIn){
+        if(!$this->isLoggedIn()){
             echo "please login first";
             $this->redirect("account","login");
         }

@@ -1,23 +1,13 @@
-<div id="album_container" class="row">
-    <?php foreach($this->publicAllbums as $album) : ?>
-        <div id="album_plate">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><?= htmlspecialchars($album['Name'])?></h3>
-                </div>
-                <div id="album_front_picture">
-                    <img src=""/>
-                </div>
-                <div class="panel-body">
-                    <?= htmlspecialchars($album['Description'])?>
-                </div>
-                <div id="album_actions">
-                    <a href="/albums/view" class="btn btn-primary btn-xs">View</a>
-                    <a href="/albums/edit" class="btn btn-primary btn-xs">Edit</a>
-                    <a href="/pictures/upload" class="btn btn-primary btn-xs">Add pictures</a>
-                    <input type="hidden" name="albumId" value="<?php $_SESSION['albumId']=$album['Id'] ?>" />
-                </div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="jumbotron">
+            <h1>Welcome to GeoPhoto</h1>
+            <p class="front_text">GeoPhoto is a online photo album which gaves to its users the posibility to create and view albums with pictures and much more experience</p>
+            <p class="front_text"><a href="albums" class="btn btn-primary btn-lg">View Albums gallery</a></p>
+            <div class="front_image">
+                <img class="front_image" src="/content/images/front_image.jpeg" alt=""/>
             </div>
         </div>
-    <?php endforeach ?>
+
+    </div>
 </div>

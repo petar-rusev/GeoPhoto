@@ -32,5 +32,19 @@ textarea {
     color: #ffffff;
 }
 
+.logo {
+    width: 40px;
+    padding-bottom:5px;
+}
+
+.front_image{
+    width:300px;
+    display:inline-block;
+    padding-left:50px;
+}
+
+.front_text{
+    display:inline-block;
+}
 
 
