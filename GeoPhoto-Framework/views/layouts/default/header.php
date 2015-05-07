@@ -67,7 +67,7 @@
                     <?php endif;?>
                     <?php if($this->isLoggedIn()) : ?>
                         <li><span>Hello, <?php echo $_SESSION['username']?></span></li>
-                        <form method="post" action="/account/logout"><input type="submit" value="Logout"/></form>
+                        <a href="/account/logout" class="btn btn-xs">Logout</a>
                     <?php endif; ?>
                 </ul>
             </div>

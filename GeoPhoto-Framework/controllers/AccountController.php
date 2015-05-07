@@ -47,8 +47,8 @@ class AccountController extends BaseController {
     }
 
     public function logout(){
+        $this->redirect('home','index');
         session_destroy();
-        $this->redirectToUrl('/home/index');
     }
 
 }

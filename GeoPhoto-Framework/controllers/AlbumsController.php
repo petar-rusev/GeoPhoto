@@ -128,23 +128,23 @@ class AlbumsController extends BaseController {
                 $imageExif = $this->get_exif_data($this->dbImage->imageUrl);
 
                 foreach ($imageExif as $key => $section) {
-                    foreach ($section as $name => $val) {
-                        if ($key == 'GPS' && $name == 'GPSLongitude') {
+                    foreach ($section as $nameInSection => $val) {
+                        if ($key == 'GPS' && $nameInSection == 'GPSLongitude') {
                             $longitudeData = explode('/', $val[2]);
                             $this->dbImage->longitude = floatval($longitudeData[0]/(float)$longitudeData[1]);
                         }
-                        if ($key == 'GPS' && $name == 'GPSLatitude') {
+                        if ($key == 'GPS' && $nameInSection == 'GPSLatitude') {
                             $latitudeData = explode('/', $val[2]);
                             $this->dbImage->latitude = floatval($latitudeData[0]/(float)$latitudeData[1]);
                         }
-                        if ($key == 'IFD0' && $name == 'Make') {
+                        if ($key == 'IFD0' && $nameInSection == 'Make') {
                             $this->dbImage->cameraModel = $val;
                         }
-                        if ($key == 'IFD0' && $name == 'Model') {
+                        if ($key == 'IFD0' && $nameInSection == 'Model') {
                             $this->dbImage->cameraModel.=' '.$val;
 
                         }
-                        if ($key == 'IFD0' && $name == 'DateTime') {
+                        if ($key == 'IFD0' && $nameInSection == 'DateTime') {
                             $this->dbImage->dateShooted = $val;
                         }
 
@@ -154,6 +154,7 @@ class AlbumsController extends BaseController {
 
             }
             array_push($this->dbImagesArray,$this->dbImage);
+            $this->dbImage=null;
             $count++;
 
         }
@@ -170,9 +171,12 @@ class AlbumsController extends BaseController {
             $this->upload_pictures($files);
             $images = $this->dbImagesArray;
 
-            foreach($images as $i=>$name){
-                $isUploaded = $this->model->upload($id,$images[i]->dbImageName,$images[$i]->cameraModel,$images[$i]->dateShooted,
-                    $images[$i]->dateUploaded,$images[$i]->latitude,$images[$i]->longitude,$images[$i]->imageUrl,$images[$i]->imageType,$images[$i]->imageName);
+            for($i=0;$i<count($images);++$i){
+
+                $isUploaded = $this->model->upload($id,$images[$i]->dbImageName,$images[$i]->cameraModel,$images[$i]->dateShooted,
+                    $images[$i]->dateUploaded,$images[$i]->latitude,$images[$i]->longitude,$images[$i]->imageUrl,
+                    $images[$i]->imageType,$images[$i]>imageName);
+
                 $lastPicId = $_SESSION['imgLast'];
 
                 if(!$isUploaded){

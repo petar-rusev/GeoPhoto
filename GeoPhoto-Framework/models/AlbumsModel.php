@@ -51,7 +51,8 @@ class AlbumsModel extends BaseModel {
     public function upload($id,$imageName,$cameraModel,$dateShooted, $dateUploaded,$latitude,$longitude, $imageUrl,$imageType,$imageName){
 
         $insert_statement = self::$db->prepare(
-            "INSERT INTO Pictures(Name,CameraModel,DateShooted,DateUploaded,Latitude,Longitude,ImageUrl) VALUES(?,?,?,?,?,?,?)");
+            "INSERT INTO Pictures(Name,CameraModel,DateShooted,DateUploaded,Latitude,Longitude,ImageUrl)
+              VALUES(?,?,?,?,?,?,?)");
 
         $insert_statement->bind_param('sssssss',$imageName,$cameraModel,$dateShooted, $dateUploaded,$latitude,$longitude, $imageUrl);
 
