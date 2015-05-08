@@ -11,6 +11,7 @@
     <script src="/content/lib/jquery.form/jquery.form.js"></script>
     <script src="/content/js/fileUpload.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="/content/maps/initiateMap.js"></script>
     <link rel="stylesheet" href="/content/styles/bootstrap/bootstrap.css"/>
     <link rel="stylesheet" href="/content/styles/bootstrapTheme.css"/>
     <link rel="stylesheet" href="/content/styles/app.css"/>
@@ -18,6 +19,7 @@
     <link rel="stylesheet" href="/content/styles/album.css"/>
     <link rel="stylesheet" href="/content/styles/fileUpload/pure-min.css"/>
     <link rel="stylesheet" href="/content/styles/fileUpload/style.css"/>
+    <link rel="stylesheet" href="/content/styles/maps.css"/>
 
 </head>
 <body>
@@ -67,7 +69,7 @@
                     <?php endif;?>
                     <?php if($this->isLoggedIn()) : ?>
                         <li><span>Hello, <?php echo $_SESSION['username']?></span></li>
-                        <a href="/account/logout" class="btn btn-xs">Logout</a>
+                        <a href="/account/logout" class="btn btn-primary btn-xs">Logout</a>
                     <?php endif; ?>
                 </ul>
             </div>

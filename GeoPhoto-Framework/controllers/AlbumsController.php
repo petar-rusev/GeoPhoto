@@ -11,7 +11,9 @@ class AlbumsController extends BaseController {
     }
 
     public function index(){
+        $this->authorize();
         $this->albums = $this->model->getAll();
+        $this->renderView();
     }
 
     public function set_album_wall(){
@@ -75,16 +77,6 @@ class AlbumsController extends BaseController {
     public function get_exif_data($imageName){
         $exifData = exif_read_data($imageName,0,true);
         return $exifData;
-    }
-
-    public function validate_image($image){
-        // 1. Validate the image size
-        if($image > (5000000)){
-
-            return false;
-        }
-
-        return true;
     }
 
     public function upload_pictures($images){
@@ -159,12 +151,12 @@ class AlbumsController extends BaseController {
 
         }
 
-        echo json_encode(array('count' => $count));
+        //echo json_encode(array('count' => $count));
 
     }
 
     public function upload($id){
-
+        $this->authorize();
         if($this->isPost()) {
 
             $files = $_FILES["files"];
@@ -175,7 +167,7 @@ class AlbumsController extends BaseController {
 
                 $isUploaded = $this->model->upload($id,$images[$i]->dbImageName,$images[$i]->cameraModel,$images[$i]->dateShooted,
                     $images[$i]->dateUploaded,$images[$i]->latitude,$images[$i]->longitude,$images[$i]->imageUrl,
-                    $images[$i]->imageType,$images[$i]>imageName);
+                    $images[$i]->imageType,$images[$i]->imageName);
 
                 $lastPicId = $_SESSION['imgLast'];
 
@@ -189,8 +181,23 @@ class AlbumsController extends BaseController {
                     rename($oldFileName,$newFileName);
                 }
             }
+            $this->redirect('home');
         }
 
+    }
+
+    public function hasImages(){
+        $hasImages = null;
+        $albumId = $_SESSION['albumId'];
+        $hasImages = $this->model->hasImages($albumId);
+        return $hasImages;
+    }
+
+    public function setWallImage(){
+        $wallImage = null;
+        $albumId = $_SESSION['albumId'];
+        $wallImage = $this->model->set_wall($albumId);
+        return $wallImage;
     }
 
     public function view($id){

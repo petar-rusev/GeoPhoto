@@ -59,18 +59,20 @@ class AlbumsModel extends BaseModel {
         $insert_statement->execute();
 
 
-        $create_unique_url = self::$db->prepare("UPDATE Pictures SET ImageUrl = ?");
+
         $result = $insert_statement->affected_rows;
 
         if($result>0 && $id!=null){
             //Sets the new unique image url
+            $pictureId = $insert_statement->insert_id;
+            $create_unique_url = self::$db->prepare("UPDATE Pictures SET ImageUrl = ? WHERE Id = ?");
             $newUrl = IMAGES_DIR.$imageName.'_'.$insert_statement->insert_id.$imageType;
-            $create_unique_url->bind_param('s',$newUrl);
+            $create_unique_url->bind_param('si',$newUrl,$pictureId);
             $create_unique_url->execute();
 
-            $pictureId = $insert_statement->insert_id;
+
             $albums_pictures_insert = self::$db->prepare("INSERT INTO Albums_has_Pictures(Albums_Id,Pictures_Id) VALUES(?,?)");
-            $albums_pictures_insert->bind_param('ii',$albumId,$pictureId);
+            $albums_pictures_insert->bind_param('ii',$id,$pictureId);
             $albums_pictures_insert->execute();
             $_SESSION['imgLast']=$insert_statement->insert_id;
         }
@@ -79,13 +81,49 @@ class AlbumsModel extends BaseModel {
 
     public function view($id){
 
-        $statement = self::$db->prepare("SELECT * FROM Pictures LEFT OUTER JOIN Albums_has_Pictures
-            ON (Id=Albums_Id)WHERE Albums_Id = ?");
+        $statement = self::$db->prepare("SELECT * FROM Pictures LEFT JOIN Albums_has_Pictures
+            ON (Id=Pictures_Id)WHERE Albums_Id = ?");
 
         $statement->bind_param("i",$id);
         $statement->execute();
 
         return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function set_wall($id){
+        $statement = self::$db->prepare("SELECT COUNT(Pictures_Id) FROM Albums_has_Pictures WHERE Albums_Id = ?");
+
+        $statement->bind_param('i',$id);
+
+        $statement->execute();
+
+        $result = $statement->get_result()->fetch_assoc();
+
+        if($result['COUNT(Pictures_Id)']){
+            $get_wall_image = self::$db->prepare("SELECT ImageUrl FROM Pictures LEFT OUTER JOIN Albums_has_Pictures
+            ON (?=Albums_Id)");
+
+            $get_wall_image->bind_param('i',$id);
+
+            $get_wall_image->execute();
+
+            $wall_image = $get_wall_image->get_result()->fetch_assoc();
+
+            return $wall_image['ImageUrl'];
+        }
+    }
+
+    public function hasImages($id){
+
+        $statement=self::$db->prepare("SELECT COUNT(Pictures_Id) FROM Albums_has_Pictures WHERE Albums_Id = ?");
+
+        $statement->bind_param('i',$id);
+
+        $statement->execute();
+
+        $result = $statement->get_result()->fetch_assoc();
+
+        return $result['COUNT(Pictures_Id)'];
     }
 
 }

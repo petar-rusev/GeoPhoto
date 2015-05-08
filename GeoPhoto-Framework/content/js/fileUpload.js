@@ -22,12 +22,8 @@ $(function() {
             var pVel = percentComplete + '%';
             bar.width(pVel);
             percent.html(pVel);
-        },
-
-        /* complete call back */
-        complete: function(data) {
-            status.html(data.responseJSON.count + ' Files uploaded!').fadeIn();
         }
+
 
     });
 });

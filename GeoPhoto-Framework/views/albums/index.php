@@ -5,14 +5,22 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><?= htmlspecialchars($album['Name'])?></h3>
                 </div>
+                <input type="hidden" value="<?= $_SESSION['albumId'] = $album['Id']?>"/>
                 <div id="album_front_picture">
-                    <img src="/"/>
+                    <?php
+                        if($this->hasImages()>0){
+                            $wallImage=$this->setWallImage();
+                            echo '<img src="/'.$wallImage.'"/>';
+                        }
+                        else{
+                            echo '<img src="/content/images/camera-no-image.jpg">';
+                        }
+                    ?>
                 </div>
                 <div id="album_actions">
                     <a href="/albums/view/<?= $album['Id']?>" class="btn btn-primary btn-xs">View</a>
                     <a href="/albums/edit/<?= $album['Id']?>" class="btn btn-primary btn-xs">Edit</a>
                     <a href="/albums/upload/<?= $album['Id']?>" class="btn btn-primary btn-xs">Add pictures</a>
-                    <input type="hidden" value="<?= $_SESSION['albumId'] = $album['Id']?>"/>
                 </div>
             </div>
         </div>

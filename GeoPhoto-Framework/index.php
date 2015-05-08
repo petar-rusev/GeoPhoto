@@ -30,13 +30,13 @@ else{
 
 if(method_exists($controller,$action)){
     call_user_func_array(array($controller,$action),$params);
+    $controller->renderView();
 }
 else{
     die("Cannot find action $action in controller $controllerClassName");
 }
 
-$controller->renderView();
-
+//
 function __autoload($class_name){
     if(file_exists("controllers/$class_name.php")){
         include "controllers/$class_name.php";

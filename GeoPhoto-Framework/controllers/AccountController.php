@@ -22,7 +22,7 @@ class AccountController extends BaseController {
             if($this->model->register($username,$password,$email,$phone)){
                 $_SESSION['username'] = $username;
                 $_SESSION[userId]=$this->model->getUser($username);
-                $this->redirect("albums",'index');
+                header('Location: /album/index');
             }
             else{
                 echo "Register failed";
@@ -32,13 +32,15 @@ class AccountController extends BaseController {
     }
 
     public function login(){
+
         if($this->isPost()){
             $username = $_POST['username'];
             $password = $_POST['password'];
-            if($this->model->login($username,$password)){
+            $isLogged = $this->model->login($username,$password);
+            if($isLogged){
                 $_SESSION['username'] = $username;
                 $_SESSION['userId'] = $this->model->getUser($username);
-                $this->redirect('albums','index');
+                $this->redirect('account','index');
             }
             else{
                 echo "Login Error!";
@@ -47,8 +49,8 @@ class AccountController extends BaseController {
     }
 
     public function logout(){
-        $this->redirect('home','index');
         session_destroy();
+        $this->redirect('home','index');
     }
 
 }

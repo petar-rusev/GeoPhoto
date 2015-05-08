@@ -1,84 +1,114 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Pesho
- * Date: 5/1/2015
- * Time: 5:12 PM
- */
 
 abstract class BaseController {
-
-    protected  $controllerName;
+    protected $controller;
     protected $action;
-    protected $params;
-    protected $layoutName = DEFAULT_LAYOUT;
-    protected $isViewRendered = false;
-    protected $isPost = false;
-    protected $isLoggedIn;
+    protected $layout = DEFAULT_LAYOUT;
+    protected $viewBag = [];
+    protected $viewRendered = false;
 
-    function __construct($controllerName,$action){
-        $this->controllerName = $controllerName;
+    public function __construct($controller, $action) {
+        $this->controller = $controller;
         $this->action = $action;
         $this->onInit();
     }
 
-    public function onInit(){
-
+    public function __get($name) {
+        // Properties come from $this->viewBag
+        if (isset($this->viewBag[$name])) {
+            return $this->viewBag[$name];
+        }
+        // Fallback to $this
+        if (property_exists($this, $name)) {
+            return $this->$name;
+        }
+        return null;
     }
 
-    public function index(){
+    public function __set($name, $value) {
+        // Non-existing properties are stored in $this->viewBag
+        $this->viewBag[$name] = $value;
+    }
 
+    protected function onInit() {
+        // Override this function in subclasses to initialize the controller
+    }
+
+    public function index() {
+        $this->renderView();
+    }
+
+    public function renderView($viewName = null, $isPartial = false) {
+        if (!$this->viewRendered) {
+            if ($viewName == null) {
+                $viewName = $this->action;
+            }
+            if (!$isPartial) {
+                include_once('views/layouts/' . $this->layout . '/header.php');
+            }
+            include_once('views/' . $this->controller . '/' . $viewName . '.php');
+            if (!$isPartial) {
+                include_once('views/layouts/' . $this->layout . '/footer.php');
+            }
+            $this->viewRendered = true;
+        }
+    }
+
+    protected function redirectToUrl($url) {
+        header("Location: $url");
+        die;
+    }
+
+    protected function redirect($controller = null, $action = null, $params = []) {
+        if ($controller == null) {
+            $controller = $this->controller;
+        }
+        $url = "/$controller/$action";
+        $paramsUrlEncoded = array_map('urlencode', $params);
+        $paramsJoined = implode('/', $paramsUrlEncoded);
+        if ($paramsJoined != '') {
+            $url .= '/' . $paramsJoined;
+        }
+        $this->redirectToUrl($url);
     }
 
     protected function isPost() {
         return $_SERVER['REQUEST_METHOD'] == 'POST';
     }
 
-    public function renderView($viewName = null,$includeLayout = true){
-        if(!$this->isViewRendered) {
-            if ($viewName == null) {
-                $viewName = $this->action;
-            }
-
-            $viewFileName = 'views/' . $this->controllerName
-                . '/' . $viewName . '.php';
-
-            if($includeLayout){
-                $headerFile = "views/layouts/".$this->layoutName.'/header.php';
-                include_once($headerFile);
-            }
-            include_once($viewFileName);
-            if($includeLayout){
-                $footerFile = "views/layouts/".$this->layoutName.'/footer.php';
-                include_once($footerFile);
-            }
-
-            $this->isViewRendered=true;
+    private function addMessage($msgSessionkey, $msgText) {
+        if (!isset($_SESSION[$msgSessionkey])) {
+            $_SESSION[$msgSessionkey] = [];
         }
+        array_push($_SESSION[$msgSessionkey], $msgText);
+
     }
 
-    public function redirectToUrl($url){
-        header("Location: ".$url);
-        die;
+    protected function addErrorMessage($errorMsg) {
+        $this->addMessage(ERROR_MESSAGES_SESSION_KEY, $errorMsg);
     }
-    public function redirect($controllerName,$actionName=null,$params = null){
-        $url = "/".urldecode($controllerName);
-        if($actionName!=null){
-            $url .= '/'.urlencode($actionName);
-        }
-        if($params != null){
-            $encodedparams = array_map($params,'urlencode');
-            $url .= implode('/',$encodedparams);
-        }
-        $this->redirectToUrl($url);
+
+    protected function addInfoMessage($infoMsg) {
+        $this->addMessage(INFO_MESSAGES_SESSION_KEY, $infoMsg);
     }
-    public function isLoggedIn(){
+
+    protected function isLoggedIn() {
         return isset($_SESSION['username']);
     }
-    public function authorize(){
-        if(!$this->isLoggedIn()){
-            echo "please login first";
-            $this->redirect("account","login");
+
+    protected function isAdmin() {
+        return isset($_SESSION['isAdmin']);
+    }
+
+    protected function authorize() {
+        if (! $this->isLoggedIn()) {
+            $this->redirect("account", "login");
+        }
+    }
+
+    protected function authorizeAdmin() {
+        if (! $this->isAdmin()) {
+            die('Administrator account is required!');
         }
     }
 }
