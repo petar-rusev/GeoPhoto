@@ -18,7 +18,8 @@
                     ?>
                 </div>
                 <div id="album_actions">
-                    <a href="/albums/view/<?= $album['Id']?>" class="btn btn-primary btn-xs">View</a>
+                    <a id="getData" href="/albums/view/<?= $album['Id']?>" class="btn btn-primary btn-xs">View</a>
+                    <input type="hidden" value="<?php $_SESSION["selectedAlbum"]=$album['Id'] ?>"/>
                     <a href="/albums/edit/<?= $album['Id']?>" class="btn btn-primary btn-xs">Edit</a>
                     <a href="/albums/upload/<?= $album['Id']?>" class="btn btn-primary btn-xs">Add pictures</a>
                 </div>

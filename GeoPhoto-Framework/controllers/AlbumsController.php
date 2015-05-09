@@ -200,9 +200,20 @@ class AlbumsController extends BaseController {
         return $wallImage;
     }
 
-    public function view($id){
+    public function view($id,$page=0,$pageSize=5)
+    {
+
         $this->authorize();
-        $this->pictures = $this->model->view($id);
+        $from = $page * $pageSize;
+        $this->page=$page;
+        $this->pageSize=$pageSize;
+        $this->pictures = $this->model->view($id, $from, $pageSize);
     }
 
+    public function getGps(){
+        header('Content-Type: application/json');
+        $albumId = $_SESSION['selectedAlbum'];
+
+        $this->gpsData = $this->model->getGpsData($albumId);
+    }
 }

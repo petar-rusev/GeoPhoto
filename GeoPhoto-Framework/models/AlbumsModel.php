@@ -79,15 +79,15 @@ class AlbumsModel extends BaseModel {
         return $result;
     }
 
-    public function view($id){
+    public function view($id,$from,$to){
 
-        $statement = self::$db->prepare("SELECT * FROM Pictures LEFT JOIN Albums_has_Pictures
-            ON (Id=Pictures_Id)WHERE Albums_Id = ?");
+        $statement = self::$db->prepare("SELECT * FROM(SELECT * FROM Pictures LEFT JOIN Albums_has_Pictures
+            ON (Id=Pictures_Id)WHERE Albums_Id = ?)allPictures LIMIT ?,?");
 
-        $statement->bind_param("i",$id);
+        $statement->bind_param("iii",$id,$from,$to);
         $statement->execute();
-
-        return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        $result = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
     }
 
     public function set_wall($id){
@@ -124,6 +124,19 @@ class AlbumsModel extends BaseModel {
         $result = $statement->get_result()->fetch_assoc();
 
         return $result['COUNT(Pictures_Id)'];
+    }
+
+    public function getGpsData($id){
+
+        $statement=self::$db->prepare("SELECT * FROM Pictures LEFT JOIN Albums_has_Pictures
+            ON(Id = Pictures_Id) WHERE Albums_Id = ? AND Latitude IS NOT NULL");
+
+        $statement->bind_param('i',$id);
+        $statement->execute();
+
+        $result = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
     }
 
 }
