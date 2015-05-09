@@ -9,7 +9,6 @@ class CategoriesController extends BaseController {
     }
 
     public function show(){
-        $this->authorize();
         $this->categories = $this->model->getAll();
         $this->renderView(__FUNCTION__,true);
     }

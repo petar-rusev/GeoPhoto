@@ -221,4 +221,21 @@ class AlbumsController extends BaseController {
     public function rankAlbum($id){
 
     }
+
+    public function welcomeCheck(){
+        $this->check=$this->model->checkPublic();
+
+        $this->renderView(__FUNCTION__,true);
+    }
+
+    public function vote($vote){
+        $id=$_SESSION['currentAlbum'];
+        $isVoted = $this->model->setVote($id,$vote);
+        if($isVoted){
+            $this->topFiveRanked = $this->model->getHighlyRanked();
+            $this->renderView(__FUNCTION__,true);
+        }
+
+    }
+
 }

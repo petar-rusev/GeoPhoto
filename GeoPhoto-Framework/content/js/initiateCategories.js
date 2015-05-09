@@ -12,6 +12,7 @@ $(document).ready(function(){
     $.ajax({
         url:'/categories/choose',
         method: 'Get',
+        async:false,
         success:(function(data){
             $('#choose_category').append(data);
         })

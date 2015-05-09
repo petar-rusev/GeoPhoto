@@ -154,4 +154,46 @@ class AlbumsModel extends BaseModel {
             return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
         }
     }
+
+    public function checkPublic(){
+        $statement=self::$db->prepare("SELECT * FROM Albums WHERE IsPublic=?");
+        $checkIfExistsPublic = 1;
+        $statement->bind_param('i',$checkIfExistsPublic);
+        $statement->execute();
+
+        return $statement->affected_rows>0;
+    }
+
+    public function setVote($id,$vote){
+        if($vote>0){
+            $statement=self::$db->prepare("INSERT INTO Ranks(UpVote,Albums_Id) VALUES(?,?)");
+            $statement->bind_param('ii',$id,$vote);
+            $statement->execute();
+        }
+        else{
+            $statement=self::$db->prepare("INSERT INTO Ranks(DownVote,Albums_Id) VALUES(?,?)");
+            $statement->bind_param('ii',$id,$vote);
+            $statement->execute();
+        }
+
+
+        return $statement->affected_rows>0;
+    }
+
+    public function getHighlyRanked(){
+        $statement_get_likes = self::$db->prepare("SELECT Albums_Id,SUM(UpVote)-SUM(DownVote) as realVote FROM Ranks GROUP By ORDER BY realVote desc");
+
+        $statement_get_likes->execute();
+        $votes = $statement_get_likes->get_result()->fetch_all();
+        if(!$votes){
+            return false;
+        }
+        if(count($votes)<5){
+            
+        }
+        else{
+
+        }
+        return $votes;
+    }
 }

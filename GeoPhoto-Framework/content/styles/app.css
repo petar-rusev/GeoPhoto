@@ -34,7 +34,7 @@ textarea {
 
 .logo {
     width: 40px;
-    padding-bottom:5px;
+
 }
 
 .front_image{
@@ -46,5 +46,9 @@ textarea {
 .front_text{
     display:inline-block;
 }
-
-
+#bs-example-navbar-collapse-1{
+    margin-left:30px;
+}
+.navbar{
+    min-height:80px;
+}

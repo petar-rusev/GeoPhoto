@@ -1,7 +1,7 @@
 <?php
-    $url = $_SERVER['REQUEST_URI'];
-    $parts = explode('/',$url);
-    $_SESSION['currentAlbum']=$parts[3];
+$url = $_SERVER['REQUEST_URI'];
+$parts = explode('/',$url);
+$_SESSION['currentAlbum']=$parts[3];
 ?>
 <div id="map-panel" class="panel panel-primary col-md-7 col-md-offset-2" style="height: 420px">
     <div class="panel-heading">
@@ -31,6 +31,3 @@
         <li><a href="/albums/view/<?=$_SESSION["currentAlbum"]?>/<?= $this->page+1?>/<?= $this->pageSize?>">Next Page</a></li>
     </ul>
 </div>
-
-
-
