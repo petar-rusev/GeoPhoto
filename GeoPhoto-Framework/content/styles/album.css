@@ -16,10 +16,6 @@
 #gallery-panel{
     padding:0;
 }
-.panel-info{
-    margin-top:300px;
-    padding:0;
-}
 #slider{
     margin-top:20px;
 }
@@ -31,4 +27,7 @@
 #gallery-heading img{
     width:20px;
     height:20px;
+}
+.panel-info{
+    margin-top: 10px;
 }

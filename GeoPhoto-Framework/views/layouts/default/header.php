@@ -12,7 +12,7 @@
     <script src="/content/js/fileUpload.js"></script>
     <script src="/content/js/jssor.js"></script>
     <script src="/content/js/jssor.slider.js"></script>
-    <script src="/content/js/getGpsData.js"></script>
+    <script src="/content/js/initiateCategories.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="/content/maps/initiateMap.js"></script>
     <link rel="stylesheet" href="/content/styles/bootstrap/bootstrap.css"/>
@@ -55,15 +55,9 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/albums/index">Albums</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
+                        <a id="show-categories" href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
+                        <ul id="categories" class="dropdown-menu" role="menu">
+
                         </ul>
                     </li>
                 </ul>

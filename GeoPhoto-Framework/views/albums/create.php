@@ -27,6 +27,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="sel1">Choose Category</label>
+                <select id="choose_category" class="form-control" name="choose_category">
+
+                </select>
+            </div>
+            <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
                     <button class="btn btn-default">Cancel</button>
                     <button type="submit" class="btn btn-primary" value="Create">Create</button>

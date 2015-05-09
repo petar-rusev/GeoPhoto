@@ -16,14 +16,14 @@ class AlbumsModel extends BaseModel {
         return $statement->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function create($name,$description,$userId,$isPublic){
+    public function create($name,$description,$userId,$isPublic,$category){
         if($name == ''){
           return false;
        }
 
         $statement = self::$db->prepare(
-            "INSERT INTO albums(Name,Description,Users_Id,isPublic) VALUES(?,?,?,?)");
-        $statement->bind_param("ssii",$name,$description,$userId,$isPublic);
+            "INSERT INTO albums(Name,Description,Users_Id,isPublic,Categories_Id) VALUES(?,?,?,?,?)");
+        $statement->bind_param("ssiii",$name,$description,$userId,$isPublic,$category);
         $statement->execute();
 
         return $statement->affected_rows>0;;
@@ -139,4 +139,19 @@ class AlbumsModel extends BaseModel {
         return $result;
     }
 
+    public function rankAlbum($id){
+
+    }
+
+    public function setCategory($name){
+        $statement=self::$db->prepare("SELECT Id FROM Categories WHERE Name = ?");
+        $statement->bind_param('s',$name);
+        $statement->execute();
+
+        $result = $statement->affected_rows;
+
+        if($result>0){
+            return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        }
+    }
 }

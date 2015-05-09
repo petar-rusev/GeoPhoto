@@ -27,11 +27,12 @@ class AlbumsController extends BaseController {
             $description = $_POST['album_description'];
             $userId = $_SESSION['userId']['Id'];
             $isPublic = $_POST['album_isPublic'];
+            $category = $_POST['choose_category'];
             if(!isset($isPublic)){
                 $isPublic = 0;
             }
 
-            if($this->model->create($name,$description,$userId,$isPublic)){
+            if($this->model->create($name,$description,$userId,$isPublic,$category)){
                 $this->redirect('albums');
             }
             else{
@@ -215,5 +216,9 @@ class AlbumsController extends BaseController {
         $albumId = $_SESSION['selectedAlbum'];
 
         $this->gpsData = $this->model->getGpsData($albumId);
+    }
+
+    public function rankAlbum($id){
+
     }
 }
