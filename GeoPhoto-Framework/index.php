@@ -1,7 +1,5 @@
 <?php
-
 session_start();
-
 require_once('includes/config.php');
 
 $requestParts = explode('/',parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH));
@@ -23,26 +21,28 @@ $controllerFileName = "controllers/".$controllerClassName.'.php';
 
 if(class_exists($controllerClassName)){
     $controller = new $controllerClassName($controllerName,$action);
+
+    if(method_exists($controller,$action)){
+        call_user_func_array(array($controller,$action),$params);
+        $controller->renderView();
+    }
+    else{
+        die("Cannot find action $action in controller $controllerClassName");
+    }
 }
 else{
     die("Cannot find controller with the name $controllerClassName");
 }
 
-if(method_exists($controller,$action)){
-    call_user_func_array(array($controller,$action),$params);
-    $controller->renderView();
-}
-else{
-    die("Cannot find action $action in controller $controllerClassName");
-}
+
 
 //
 function __autoload($class_name){
     if(file_exists("controllers/$class_name.php")){
-        include "controllers/$class_name.php";
+        include_once "controllers/$class_name.php";
     }
     if(file_exists("models/$class_name.php")){
-        include "models/$class_name.php";
+        include_once "models/$class_name.php";
     }
 }
 ?>

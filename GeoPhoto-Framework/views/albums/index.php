@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><?= htmlspecialchars($album['Name'])?></h3>
                 </div>
-                <input type="hidden" value="<?php $_SESSION["selectedAlbum"]=$album['Id'] ?>"/>
+                <input type="hidden" value="<?php $_SESSION["albumId"]=$album['Id'] ?>"/>
                 <div id="album_front_picture">
                     <?php
                         if($this->hasImages()>0){

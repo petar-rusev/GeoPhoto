@@ -1,5 +1,4 @@
 <?php
-
 class AccountsModel extends BaseModel {
 
     public function register($username,$password,$email,$phone){

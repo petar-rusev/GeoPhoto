@@ -14,8 +14,8 @@
 <div id="gallery-panel" class="panel panel-primary col-md-7 col-md-offset-2" style="height: 420px">
     <div id="gallery-heading" class="panel-heading">
         <h3 class="panel-title">Gallery Album Name</h3>
-        <a href="/albums/vote/1"><img class="rank-button" src="/content/images/thumb-up.png"/></a>
-        <a href="/albums/vote/-1"><img class="rank-button" src="/content/images/thumb-down.png"/></a>
+        <a href="/albums/showRank/1"><img class="rank-button" src="/content/images/thumb-up.png"/></a>
+        <a href="/albums/showRank/-1"><img class="rank-button" src="/content/images/thumb-down.png"/></a>
     </div>
     <div id="gallery-container" class="panel-body">
 

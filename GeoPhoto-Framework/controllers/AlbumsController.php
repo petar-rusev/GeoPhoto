@@ -1,5 +1,4 @@
 <?php
-
 class AlbumsController extends BaseController {
 
     private $dbImage;
@@ -13,7 +12,7 @@ class AlbumsController extends BaseController {
     public function index(){
         $this->authorize();
         $this->albums = $this->model->getAll();
-        $this->renderView();
+
     }
 
     public function set_album_wall(){
@@ -36,7 +35,7 @@ class AlbumsController extends BaseController {
                 $this->redirect('albums');
             }
             else{
-                echo 'Album is not created';
+//                echo 'Album is not created';
             }
 
         }
@@ -218,17 +217,16 @@ class AlbumsController extends BaseController {
         $this->gpsData = $this->model->getGpsData($albumId);
     }
 
-    public function rankAlbum($id){
-
-    }
-
     public function welcomeCheck(){
-        $this->check=$this->model->checkPublic();
+        $isExistAlbums = $this->model->checkPublic();
 
-        $this->renderView(__FUNCTION__,true);
+        if(!$isExistAlbums){
+            $this->renderView(__FUNCTION__,true);
+        }
+       $this->viewRendered=true;
     }
 
-    public function vote($vote){
+    public function showRank($vote){
         $id=$_SESSION['currentAlbum'];
         $isVoted = $this->model->setVote($id,$vote);
         if($isVoted){

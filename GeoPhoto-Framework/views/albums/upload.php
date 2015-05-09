@@ -1,5 +1,4 @@
 <div class="container">
-
     <!-- status message will be appear here -->
     <div class="status"></div>
 
@@ -14,5 +13,4 @@
         <div class="bar"></div >
         <div class="percent">0%</div >
     </div>
-
 </div>

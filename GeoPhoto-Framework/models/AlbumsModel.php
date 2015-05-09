@@ -1,5 +1,4 @@
 <?php
-
 class AlbumsModel extends BaseModel {
 
     public function find($id){
@@ -161,7 +160,13 @@ class AlbumsModel extends BaseModel {
         $statement->bind_param('i',$checkIfExistsPublic);
         $statement->execute();
 
-        return $statement->affected_rows>0;
+        $result = $statement->get_result()->fetch_all();
+
+        if(!$result){
+            return false;
+        }
+
+        return true;
     }
 
     public function setVote($id,$vote){
@@ -181,19 +186,30 @@ class AlbumsModel extends BaseModel {
     }
 
     public function getHighlyRanked(){
-        $statement_get_likes = self::$db->prepare("SELECT Albums_Id,SUM(UpVote)-SUM(DownVote) as realVote FROM Ranks GROUP By ORDER BY realVote desc");
+        $statement_get_likes = self::$db->prepare("SELECT Albums_Id,SUM(UpVote)-SUM(DownVote) as realVote FROM Ranks GROUP By Albums_Id ORDER BY realVote desc");
 
         $statement_get_likes->execute();
+
         $votes = $statement_get_likes->get_result()->fetch_all();
+        $get_albums = self::$db->prepare("SELECT * FROM Albums WHERE Id = ?");
         if(!$votes){
             return false;
         }
+        $topRankedAlbums = [];
         if(count($votes)<5){
-            
-        }
-        else{
+            foreach($votes as $vote){
+                $get_albums->bind_param('i',$vote[0]);
+                $get_albums->execute();
+                $album = $get_albums->get_result()->fetch_assoc();
+                array_push($topRankedAlbums,$album);
+            }
+            return $topRankedAlbums;
 
         }
-        return $votes;
+
+        $slicedRankedAlbums = array_slice($votes, 0, 5, true);
+        return $slicedRankedAlbums;
+
+
     }
 }

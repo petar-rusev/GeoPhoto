@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        <?php if(isset($this->title)) echo htmlspecialchars($this->title)?>
+        <?= htmlspecialchars($this->title)?>
     </title>
-    <script src="/content/lib/jquery/jquery-2.1.3.js"></script>
-    <script src="/content/lib/bootstrap/bootstrap-3.1.1.js"></script>
-    <script src="/content/lib/jquery.noty/jquery.noty.js"></script>
-    <script src="/content/lib/jquery.form/jquery.form.js"></script>
-    <script src="/content/js/fileUpload.js"></script>
-    <script src="/content/js/initiateCategories.js"></script>
-    <script src="/content/js/hideWelcomeScreens.js"></script>
     <link rel="stylesheet" href="/content/styles/bootstrap/bootstrap.css"/>
     <link rel="stylesheet" href="/content/styles/bootstrapTheme.css"/>
     <link rel="stylesheet" href="/content/styles/app.css"/>
@@ -60,7 +53,7 @@
                         <li><a href="/account/register">Signup</a></li>
                     <?php endif;?>
                     <?php if($this->isLoggedIn()) : ?>
-                        <li><span>Hello, <?php echo $_SESSION['username']?></span></li>
+                        <li><span>Hello, <?= htmlspecialchars($_SESSION['username'])?></span></li>
                         <a href="/account/logout" class="btn btn-primary btn-xs">Logout</a>
                     <?php endif; ?>
                 </ul>
@@ -68,5 +61,12 @@
         </div>
     </nav>
 </header>
+<script src="/content/lib/jquery/jquery-2.1.3.js"></script>
+<script src="/content/lib/bootstrap/bootstrap-3.1.1.js"></script>
+<script src="/content/lib/jquery.noty/jquery.noty.js"></script>
+<script src="/content/lib/jquery.form/jquery.form.js"></script>
+<script src="/content/js/fileUpload.js"></script>
+<script src="/content/js/initiateCategories.js"></script>
+<script src="/content/js/hideWelcomeScreens.js"></script>
 </body>
 </html>

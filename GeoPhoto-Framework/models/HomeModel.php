@@ -1,5 +1,4 @@
 <?php
-
 class HomeModel extends BaseModel {
 
     public function getPublicAllbums(){

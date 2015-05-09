@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-5 col-md-offset-4">
-        <form method="post" class="form-horizontal" action="/account/login">
+        <form data-ajax="false" method="post" class="form-horizontal" action="/account/login">
             <legend>
                 Login with existing account
                 <hr/>

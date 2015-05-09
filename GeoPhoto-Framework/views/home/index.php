@@ -1,4 +1,7 @@
 <div class="row">
+    <div id="high-ranked" class="col-md-4">
+
+    </div>
     <div class="col-md-6 col-md-offset-3">
         <div class="jumbotron">
             <h1>Welcome to GeoPhoto</h1>

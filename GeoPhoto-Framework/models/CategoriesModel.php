@@ -1,5 +1,4 @@
 <?php
-
 class CategoriesModel extends BaseModel {
 
     public function getAll(){
