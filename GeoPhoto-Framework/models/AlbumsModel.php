@@ -10,10 +10,15 @@ class AlbumsModel extends BaseModel {
     }
 
     public function getAll(){
-        $statement = self::$db->query(
-            "SELECT * FROM albums");
-        return $statement->fetch_all(MYSQLI_ASSOC);
+        $isPublic=1;
+        $statement = self::$db->prepare(
+            "SELECT * FROM albums WHERE IsPublic = ?");
+        $statement->bind_param('i',$isPublic);
+        $statement->execute();
+        return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+
+
 
     public function create($name,$description,$userId,$isPublic,$category){
         if($name == ''){
@@ -79,7 +84,7 @@ class AlbumsModel extends BaseModel {
     }
 
     public function view($id,$from,$to){
-
+        $only_Public = 1;
         $statement = self::$db->prepare("SELECT * FROM(SELECT * FROM Pictures LEFT JOIN Albums_has_Pictures
             ON (Id=Pictures_Id)WHERE Albums_Id = ?)allPictures LIMIT ?,?");
 
@@ -169,20 +174,37 @@ class AlbumsModel extends BaseModel {
         return true;
     }
 
-    public function setVote($id,$vote){
-        if($vote>0){
-            $statement=self::$db->prepare("INSERT INTO Ranks(UpVote,Albums_Id) VALUES(?,?)");
-            $statement->bind_param('ii',$id,$vote);
-            $statement->execute();
-        }
-        else{
-            $statement=self::$db->prepare("INSERT INTO Ranks(DownVote,Albums_Id) VALUES(?,?)");
-            $statement->bind_param('ii',$id,$vote);
-            $statement->execute();
-        }
+    public function downVote($id,$vote){
 
 
-        return $statement->affected_rows>0;
+        $statement=self::$db->prepare("INSERT INTO Ranks(DownVote,Albums_Id) VALUES(?,?)");
+        $statement->bind_param('ii',$id,$vote);
+        $statement->execute();
+        if($statement->affected_rows>0){
+            $getOverallDownVote = self::$db->prepare("SELECT SUM(DownVote) as downVote FROM Ranks WHERE Albums_Id = ?");
+            $getOverallDownVote->bind_param('i',$id);
+            $getOverallDownVote->execute();
+            $result = $getOverallDownVote->get_result()->fetch_all(MYSQLI_ASSOC);
+            return $result;
+        }
+        return false;
+    }
+
+    public function upVote($id,$vote){
+
+
+        $statement=self::$db->prepare("INSERT INTO Ranks(UpVote,Albums_Id) VALUES(?,?)");
+        $statement->bind_param('ii',$id,$vote);
+        $statement->execute();
+        if($statement->affected_rows>0){
+            $getOverallDownVote = self::$db->prepare("SELECT SUM(UpVote) as upVote FROM Ranks WHERE Albums_Id = ?");
+            $getOverallDownVote->bind_param('i',$id);
+            $getOverallDownVote->execute();
+            $result = $getOverallDownVote->get_result()->fetch_all(MYSQLI_ASSOC);
+            return $result;
+        }
+        return false;
+
     }
 
     public function getHighlyRanked(){
@@ -211,5 +233,48 @@ class AlbumsModel extends BaseModel {
         return $slicedRankedAlbums;
 
 
+    }
+
+    public function getVote($id){
+        $statement=self::$db->prepare("SELECT SUM(UpVote) as up,SUM(DownVote) as down FROM Ranks WHERE Albums_Id = ?");
+        $statement->bind_param('i',$id);
+        $statement->execute();
+        $result = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+    public function downloadImage($pictureId){
+        $getImageUrl = self::$db->prepare("SELECT * FROM Pictures WHERE Id = ?");
+        $getImageUrl->bind_param('i',$pictureId);
+        $getImageUrl->execute();
+        $imageUrl = $getImageUrl->get_result()->fetch_assoc();
+        $fileName = $imageUrl['ImageUrl'];
+        $file = explode("/",$imageUrl['ImageUrl']);
+        $fileType = explode('.',$file[2]);
+        $contentType = "image/".$fileType[3];
+        if(!$imageUrl){ // file does not exist
+            die('file not found');
+        } else {
+            header("Cache-Control: public");
+            header("Content-Description: File Transfer");
+            header("Content-Disposition: attachment; filename=$file[2]");
+            header("Content-Type: ".$contentType);
+            header("Content-Transfer-Encoding: binary");
+
+            // read the file from disk
+            readfile($fileName);
+        }
+    }
+
+    public function getComments($id){
+        $statement=self::$db->prepare("SELECT * FROM Comments WHERE Albums_Id = ?");
+        $statement->bind_param('i',$id);
+        $statement->execute();
+        $result = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(!$result){
+            return false;
+        }
+        return $result;
     }
 }

@@ -1,3 +1,9 @@
-/**
- * Created by Pesho on 5/9/2015.
- */
+$(document).ready(function(){
+    $.ajax({
+        url:'/albums/showRank',
+        method: 'Get',
+        success:(function(data){
+            $('#high-ranked').append(data);
+        })
+    });
+});

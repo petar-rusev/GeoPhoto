@@ -79,9 +79,9 @@ class AlbumsController extends BaseController {
         return $exifData;
     }
 
-    public function upload_pictures($images){
+    private function upload_pictures($images){
 
-        $max_size = 100000000;
+        $max_size = 6000000;
         $extensions = array('jpeg', 'jpg', 'png');
         $count = 0;
         $dir = IMAGES_DIR;
@@ -202,10 +202,11 @@ class AlbumsController extends BaseController {
 
     public function view($id,$page=0,$pageSize=5)
     {
-
         $this->authorize();
+
         $from = $page * $pageSize;
         $this->page=$page;
+
         $this->pageSize=$pageSize;
         $this->pictures = $this->model->view($id, $from, $pageSize);
     }
@@ -226,14 +227,38 @@ class AlbumsController extends BaseController {
        $this->viewRendered=true;
     }
 
-    public function showRank($vote){
-        $id=$_SESSION['currentAlbum'];
-        $isVoted = $this->model->setVote($id,$vote);
-        if($isVoted){
-            $this->topFiveRanked = $this->model->getHighlyRanked();
+    public function showRank(){
+        $this->topFiveRanked = $this->model->getHighlyRanked();
+        if($this->topFiveRanked){
             $this->renderView(__FUNCTION__,true);
         }
 
     }
 
+    public function downVote($downVote){
+        $id=$_SESSION['currentAlbum'];
+        $result=$this->model->downVote($id,$downVote);
+        $_SESSION['downVote']=$result['downVote'];
+        $this->redirectToUrl('/albums/view/'.$id);
+    }
+
+    public function upVote($upVote){
+        $id=$_SESSION['currentAlbum'];
+        $result=$this->model->upVote($id,$upVote);
+        $_SESSION['upVote']=$result['upVote'];
+        $this->redirectToUrl('/albums/view/'.$id);
+    }
+
+    public function download($pictureId){
+        $this->model->downloadImage($pictureId);
+    }
+
+    public function showComments(){
+        $id = $_SESSION['currentAlbum'];
+        $this->comments=$this->model->getComments($id);
+        if($this->comments){
+            $this->renderView(__FUNCTION__,true);
+        }
+        $this->viewRendered=true;
+    }
 }

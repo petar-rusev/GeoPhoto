@@ -1,7 +1,8 @@
 #map-canvas {
     width:480px;
-    height:370px;
+    height:380px;
     position:inherit;
+    margin-bottom:50px;
 }
 #map-container{
     padding-top: 0;
@@ -9,7 +10,7 @@
     padding-left:10px;
 }
 #map-panel{
-    margin-top: 10px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left:0;
+    padding-right:0;
+    padding-bottom:10px;
 }

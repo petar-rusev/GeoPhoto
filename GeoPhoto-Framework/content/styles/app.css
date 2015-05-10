@@ -1,17 +1,3 @@
-body {
-    overflow-x: hidden;
-}
-footer {
-    margin-top:20px;
-    position:absolute;
-    bottom:0;
-    width:100%;
-}
-
-.footer-text{
-    color:#ffffff;
-}
-
 .row {
     margin-left: 0px;
     margin-right: 0px;
@@ -51,4 +37,18 @@ textarea {
 }
 .navbar{
     min-height:80px;
+}
+
+#footer-container {
+    position:fixed;
+    background:#222222;
+    height:50px;
+    bottom:0;
+    width:100%;
+}
+nav a {
+    color: #fff;
+}
+nav a:hover {
+    color: #32673f
 }

@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="/content/styles/album.css"/>
     <link rel="stylesheet" href="/content/styles/fileUpload/pure-min.css"/>
     <link rel="stylesheet" href="/content/styles/fileUpload/style.css"/>
+    <link rel="stylesheet" href="/content/styles/slider.css"/>
 </head>
-<body>
+<body style="margin-bottom: 0px">
 <header>
     <nav id="header_navbar" class="navbar navbar-default">
         <div class="container-fluid">
@@ -53,7 +54,9 @@
                         <li><a href="/account/register">Signup</a></li>
                     <?php endif;?>
                     <?php if($this->isLoggedIn()) : ?>
+                        <a href="/account/view/<?=htmlspecialchars($_SESSION['userId']['Id'])?>">
                         <li><span>Hello, <?= htmlspecialchars($_SESSION['username'])?></span></li>
+                        </a>
                         <a href="/account/logout" class="btn btn-primary btn-xs">Logout</a>
                     <?php endif; ?>
                 </ul>
@@ -68,5 +71,11 @@
 <script src="/content/js/fileUpload.js"></script>
 <script src="/content/js/initiateCategories.js"></script>
 <script src="/content/js/hideWelcomeScreens.js"></script>
-</body>
-</html>
+<script src="/content/js/showHighRanked.js"></script>
+<!--<script src="/content/js/showAlbumVote.js"></script>-->
+<!--<script src="/content/js/jssor.js"></script>-->
+<!--<script src="/content/js/jssor.slider.js"></script>-->
+<!--<sript src="/content/js/slider.js"></sript>-->
+<!--<script src="/content/js/showAlbumsComments.js"></script>-->
+<div id="container">
+

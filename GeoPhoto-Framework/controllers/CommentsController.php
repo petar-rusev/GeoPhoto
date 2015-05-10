@@ -7,14 +7,15 @@ class CommentsController extends BaseController {
         $this->model = new CommentsModel();
     }
 
-    public function show(){
+    public function add($albumId,$userId){
+        $comment = $_POST['Text'];
+        $this->model->addAlbumComment($albumId,$userId,$comment);
+        $this->redirectToUrl("/albums/view/".$_SESSION['currentAlbum']);
 
     }
-    public function add(){
-
-    }
-    public function delete(){
-
+    public function delete($id){
+        $this->model->delete($id);
+        $this->redirectToUrl("/albums/view/".$_SESSION['currentAlbum']);
     }
 
 }

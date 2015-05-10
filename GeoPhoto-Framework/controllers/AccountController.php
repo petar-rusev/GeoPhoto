@@ -9,7 +9,7 @@ class AccountController extends BaseController {
     }
 
     public function register(){
-        if($this->isPost){
+        if($this->isPost()){
             $username = $_POST['username'];
             $password = $_POST['password'];
             $email = $_POST['email'];
@@ -48,4 +48,19 @@ class AccountController extends BaseController {
         $this->redirect('home','index');
     }
 
+    public function view($id){
+        $this->userAlbums=$this->model->getAlbums($id);
+    }
+    public function hasImages(){
+        $hasImages = null;
+        $albumId = $_SESSION['albumId'];
+        $hasImages = $this->model->hasImages($albumId);
+        return $hasImages;
+    }
+    public function setWallImage(){
+        $wallImage = null;
+        $albumId = $_SESSION['albumId'];
+        $wallImage = $this->model->set_wall($albumId);
+        return $wallImage;
+    }
 }
